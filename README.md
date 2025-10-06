@@ -11,4 +11,4 @@ Um ein Projekt starten zu können, muss man sich im selben Ordner wie die `Progr
 
 # Navigieren:
 cd Project
-cd ..   # den Ordner verlassen
+cd ..
