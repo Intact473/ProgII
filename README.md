@@ -1,7 +1,14 @@
-Neues Projekt anlegen mit 
+# Neues Projekt:
 dotnet new console -n MyProject
 
-dotnet build <- damit compile ich
+# Projekt kompilieren:
+dotnet build
 
-Projekt Starten 
+# Projekt starten:
 dotnet run
+
+Um ein Projekt starten zu können, muss man sich im selben Ordner wie die `Program.cs`-Datei befinden.
+
+# Navigieren:
+cd Project
+cd ..   # den Ordner verlassen
