@@ -1,3 +1,6 @@
 /.DS_Store
 /ProgII.sln
 /Übungen
+
+Vorlesungen/**/bin/
+Vorlesungen/**/obj/
