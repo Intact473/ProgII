@@ -8,6 +8,7 @@ class Program
         public Dictionary<string, decimal> prices = new Dictionary<string, decimal>();
         public Dictionary<string, int> stock = new Dictionary<string, int>();
         public decimal insertedMoney = 0.0m;
+
         public VendingMachine()
         {
             prices.Add("Bier", 2.00m);
@@ -44,12 +45,29 @@ class Program
         }
         public void SelectItem(string name)
         {
-            
+            int count = stock[name];
+            decimal price = prices[name];
+            if ((count > 0) && (price <= insertedMoney))
+            {
+                stock[name] = stock[name] -1;
+                insertedMoney = insertedMoney - prices[name];
+
+                Console.WriteLine($"Here is your {name}.");
+            }
+            else
+            {
+                Console.WriteLine("Not enough money.");
+            }
+
         }
     }
     public static void Main()
     {
         VendingMachine THN = new VendingMachine();
         THN.AddCoin(2.00m);
+        THN.SelectItem("Bier");
+        THN.SelectItem("Bier");
+        // THN.AddCoin(-2.00m);
+        // THN.SelectItem("Orangensaft");
     }
 }
