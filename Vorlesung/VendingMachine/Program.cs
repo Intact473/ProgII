@@ -1,12 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.CompilerServices;
 class Program
 {
     public class VendingMachine
     {
         public Dictionary<string, decimal> prices = new Dictionary<string, decimal>();
         public Dictionary<string, int> stock = new Dictionary<string, int>();
-
+        public decimal insertedMoney = 0.0m;
         public VendingMachine()
         {
             prices.Add("Bier", 2.00m);
@@ -30,11 +31,25 @@ class Program
                 Console.WriteLine(item);
             }
         }
+        public void AddCoin(decimal value)
+        {
+            insertedMoney += value;
+            foreach (var item in prices)
+            {
+                if (insertedMoney >= item.Value)
+                {
+                    Console.WriteLine("available " + item.Value +" "+ item.Key);
+                }
+            }
+        }
+        public void SelectItem(string name)
+        {
+            
+        }
     }
     public static void Main()
     {
-
         VendingMachine THN = new VendingMachine();
-        THN.PrintStock();
+        THN.AddCoin(2.00m);
     }
 }
