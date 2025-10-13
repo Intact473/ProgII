@@ -5,9 +5,9 @@ class Program
 {
     public class VendingMachine
     {
-        public Dictionary<string, decimal> prices = new Dictionary<string, decimal>();
-        public Dictionary<string, int> stock = new Dictionary<string, int>();
-        public decimal insertedMoney = 0.0m;
+        private Dictionary<string, decimal> prices = new Dictionary<string, decimal>();
+        private Dictionary<string, int> stock = new Dictionary<string, int>();
+        private decimal insertedMoney = 0.0m;
 
         public VendingMachine()
         {
@@ -34,6 +34,10 @@ class Program
         }
         public void AddCoin(decimal value)
         {
+            if (value <= 0)
+            {
+                throw new Exception("value can not be 0");
+            }
             insertedMoney += value;
             foreach (var item in prices)
             {
@@ -64,6 +68,7 @@ class Program
     public static void Main()
     {
         VendingMachine THN = new VendingMachine();
+        // THN.prices["Bier"] = -2.0m;
         THN.AddCoin(2.00m);
         THN.SelectItem("Bier");
         THN.SelectItem("Bier");
