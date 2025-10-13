@@ -78,11 +78,8 @@ class Program
     public static void Main()
     {
         VendingMachine THN = new VendingMachine();
-        // THN.prices["Bier"] = -2.0m;
         THN.AddCoin(2.00m);
         THN.SelectItem(Products.Bier);
         THN.SelectItem(Products.Bier);
-        // THN.AddCoin(-2.00m);
-        // THN.SelectItem("Orangensaft");
     }
 }
