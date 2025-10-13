@@ -58,7 +58,7 @@ class Program
             decimal price = prices[product];
             if ((count > 0) && (price <= insertedMoney))
             {
-                stock[product] = stock[product] -1;
+                stock[product] = stock[product] - 1;
                 insertedMoney = insertedMoney - prices[product];
 
                 Console.WriteLine($"Here is your {product}.");
@@ -68,6 +68,11 @@ class Program
                 Console.WriteLine("Not enough money.");
             }
 
+        }
+        public void PrintBestBefore()
+        {
+            int today = 0;
+            
         }
     }
     public static void Main()
