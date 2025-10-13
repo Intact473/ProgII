@@ -1,7 +1,0 @@
-/.DS_Store
-/ProgII.sln
-/Übungen
-/Vorlesung/**/bin/
-/Vorlesung/**/obj/
-/Vorlesung/Vorlesung.sln
-.gitignore
