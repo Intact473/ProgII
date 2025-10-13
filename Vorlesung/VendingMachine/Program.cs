@@ -3,19 +3,24 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.CompilerServices;
 class Program
 {
+    public enum Products
+    {
+        Bier,
+        Wasser
+    };
     public class VendingMachine
     {
-        private Dictionary<string, decimal> prices = new Dictionary<string, decimal>();
-        private Dictionary<string, int> stock = new Dictionary<string, int>();
+        private Dictionary<Products, decimal> prices = new Dictionary<Products, decimal>();
+        private Dictionary<Products, int> stock = new Dictionary<Products, int>();
         private decimal insertedMoney = 0.0m;
 
         public VendingMachine()
         {
-            prices.Add("Bier", 2.00m);
-            prices.Add("Wasser", 8.00m);
+            prices.Add(Products.Bier, 2.00m);
+            prices.Add(Products.Wasser, 8.00m);
 
-            stock.Add("Bier", 10);
-            stock.Add("Wasser", 10);
+            stock.Add(Products.Bier, 10);
+            stock.Add(Products.Wasser, 10);
         }
 
         public void PrintStock()
@@ -47,16 +52,16 @@ class Program
                 }
             }
         }
-        public void SelectItem(string name)
+        public void SelectItem(Products product)
         {
-            int count = stock[name];
-            decimal price = prices[name];
+            int count = stock[product];
+            decimal price = prices[product];
             if ((count > 0) && (price <= insertedMoney))
             {
-                stock[name] = stock[name] -1;
-                insertedMoney = insertedMoney - prices[name];
+                stock[product] = stock[product] -1;
+                insertedMoney = insertedMoney - prices[product];
 
-                Console.WriteLine($"Here is your {name}.");
+                Console.WriteLine($"Here is your {product}.");
             }
             else
             {
@@ -70,8 +75,8 @@ class Program
         VendingMachine THN = new VendingMachine();
         // THN.prices["Bier"] = -2.0m;
         THN.AddCoin(2.00m);
-        THN.SelectItem("Bier");
-        THN.SelectItem("Bier");
+        THN.SelectItem(Products.Bier);
+        THN.SelectItem(Products.Bier);
         // THN.AddCoin(-2.00m);
         // THN.SelectItem("Orangensaft");
     }
