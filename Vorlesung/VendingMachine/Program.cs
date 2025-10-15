@@ -1,26 +1,48 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Common;
 using System.Runtime.CompilerServices;
+
 class Program
 {
-    public enum Products
+    public class Product
     {
-        Bier,
-        Wasser
-    };
+        private int id;
+        private string name;
+        private decimal price;
+        public Product(int id, string name, decimal price)
+        {
+            this.id = id;
+            this.name = name;
+            this.price = price;
+        }
+
+
+    }
+    public class Drink: Product
+    {
+        private int bestBeforeDays;
+        public Drink(int id, string name, decimal price, int bestBeforeDays) : base(id, name, price)
+        {
+            this.bestBeforeDays = bestBeforeDays;
+        }
+
+    }
     public class VendingMachine
     {
-        private Dictionary<Products, decimal> prices = new Dictionary<Products, decimal>();
-        private Dictionary<Products, int> stock = new Dictionary<Products, int>();
+        private Dictionary<Product, uint> stock = new Dictionary<Product, uint>();
         private decimal insertedMoney = 0.0m;
 
         public VendingMachine()
         {
-            prices.Add(Products.Bier, 2.00m);
-            prices.Add(Products.Wasser, 8.00m);
 
-            stock.Add(Products.Bier, 10);
-            stock.Add(Products.Wasser, 10);
+        }
+        public void Refill(Product product,uint stock)
+        {
+            if (!this.stock.TryAdd(product, stock))
+            {
+                this.stock[product] = this.stock[product] + stock;
+            }
         }
 
         public void PrintStock()
@@ -48,11 +70,11 @@ class Program
             {
                 if (insertedMoney >= item.Value)
                 {
-                    Console.WriteLine("available " + item.Value +" "+ item.Key);
+                    Console.WriteLine("available " + item.Value + " " + item.Key);
                 }
             }
         }
-        public void SelectItem(Products product)
+        public void SelectItem(Product product)
         {
             int count = stock[product];
             decimal price = prices[product];
@@ -72,14 +94,19 @@ class Program
         public void PrintBestBefore()
         {
             int today = 0;
-            
+
         }
     }
     public static void Main()
     {
+        Product P1 = new Product(id: 1, name: "Cola", price: 20.0m);
+        Product P2 = new Product(id: 1, name: "Bier", price: 30.0m);
+
+        
         VendingMachine THN = new VendingMachine();
         THN.AddCoin(2.00m);
-        THN.SelectItem(Products.Bier);
-        THN.SelectItem(Products.Bier);
+        THN.SelectItem(Product.Bier);
+        THN.SelectItem(Product.Bier);
+
     }
 }
