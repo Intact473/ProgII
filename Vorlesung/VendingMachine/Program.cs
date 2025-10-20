@@ -8,16 +8,14 @@ class Program
     public class Product
     {
         private int id;
-        private string name;
-        private decimal price;
-        public Product(int id, string name, decimal price)
+        public decimal Price { get; private set; }
+        public string Name { get; private set; }
+        public Product(int ID, string Name, decimal Prices)
         {
-            this.id = id;
-            this.name = name;
-            this.price = price;
+            this.id = ID;
+            this.Name = Name;
+            this.Price = Prices;
         }
-
-
     }
     public class Drink: Product
     {
@@ -35,7 +33,7 @@ class Program
 
         public VendingMachine()
         {
-
+            
         }
         public void Refill(Product product,uint stock)
         {
@@ -54,9 +52,10 @@ class Program
         }
         public void PrintPrices()
         {
-            foreach (var item in prices)
+            
+            foreach (var product in stock.Keys)
             {
-                Console.WriteLine(item);
+                Console.WriteLine(product);
             }
         }
         public void AddCoin(decimal value)
@@ -99,14 +98,14 @@ class Program
     }
     public static void Main()
     {
-        Product P1 = new Product(id: 1, name: "Cola", price: 20.0m);
-        Product P2 = new Product(id: 1, name: "Bier", price: 30.0m);
-
+        Product P1 = new Product(ID: 1, Name: "Cola", Prices: 20.0m);
+        Product P2 = new Product(ID: 1, Name: "Bier", Prices: 30.0m);
+        // P1.Prices = 500.0m;
         
-        VendingMachine THN = new VendingMachine();
-        THN.AddCoin(2.00m);
-        THN.SelectItem(Product.Bier);
-        THN.SelectItem(Product.Bier);
+        // VendingMachine THN = new VendingMachine();
+        // THN.AddCoin(2.00m);
+        // THN.SelectItem(Product.Bier);
+        // THN.SelectItem(Product.Bier);
 
     }
 }
