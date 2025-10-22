@@ -7,20 +7,28 @@ class Program
 {
     public class Product
     {
+        public static int counter = 0;
         private int id;
         public decimal Price { get; private set; }
         public string Name { get; private set; }
-        public Product(int ID, string Name, decimal Prices)
+        public Product(string Name, decimal Prices)
         {
-            this.id = ID;
+            this.id = counter;
+            counter = counter + 1;
+
             this.Name = Name;
             this.Price = Prices;
+
+        }
+        public override string ToString()
+        {
+            return "Name: "+ Name + " (" + id + ")";
         }
     }
     public class Drink: Product
     {
         private int bestBeforeDays;
-        public Drink(int id, string name, decimal price, int bestBeforeDays) : base(id, name, price)
+        public Drink(string name, decimal price, int bestBeforeDays) : base(name, price)
         {
             this.bestBeforeDays = bestBeforeDays;
         }
@@ -30,30 +38,30 @@ class Program
     {
         private Dictionary<Product, uint> stock = new Dictionary<Product, uint>();
         private decimal insertedMoney = 0.0m;
+        public List<Product> availableProducts;
 
         public VendingMachine()
         {
-            
-        }
-        public void Refill(Product product,uint stock)
-        {
-            if (!this.stock.TryAdd(product, stock))
-            {
-                this.stock[product] = this.stock[product] + stock;
-            }
+            availableProducts = new List<Product>();
         }
 
-        public void PrintStock()
+
+        public void Refill(Product product)
         {
-            foreach (var item in stock)
+            availableProducts.Add(product);
+        }
+
+        public void PrintAvailableProducts()
+        {
+            foreach (var product in availableProducts)
             {
-                Console.WriteLine(item);
+                Console.WriteLine(product);
             }
         }
         public void PrintPrices()
         {
-            
-            foreach (var product in stock.Keys)
+
+            foreach (var product in availableProducts)
             {
                 Console.WriteLine(product);
             }
@@ -65,45 +73,38 @@ class Program
                 throw new Exception("value can not be 0");
             }
             insertedMoney += value;
-            foreach (var item in prices)
+        }
+        public void Select(string productName)
+        {
+            foreach (Product product in availableProducts)
             {
-                if (insertedMoney >= item.Value)
+
+                if ((product.Name == productName) && product.Price <= insertedMoney)
                 {
-                    Console.WriteLine("available " + item.Value + " " + item.Key);
+                    insertedMoney = insertedMoney - product.Price;
+                    Console.WriteLine($"Here is your {product}.");
+                    return;
                 }
             }
+            Console.WriteLine("Not enough Money");
         }
-        public void SelectItem(Product product)
-        {
-            int count = stock[product];
-            decimal price = prices[product];
-            if ((count > 0) && (price <= insertedMoney))
-            {
-                stock[product] = stock[product] - 1;
-                insertedMoney = insertedMoney - prices[product];
 
-                Console.WriteLine($"Here is your {product}.");
-            }
-            else
-            {
-                Console.WriteLine("Not enough money.");
-            }
-
-        }
-        public void PrintBestBefore()
-        {
-            int today = 0;
-
-        }
     }
+    
     public static void Main()
     {
-        Product P1 = new Product(ID: 1, Name: "Cola", Prices: 20.0m);
-        Product P2 = new Product(ID: 1, Name: "Bier", Prices: 30.0m);
+        Product P1 = new Product(Name: "Cola", Prices: 2.0m);
+        Product P2 = new Product(Name: "Bier", Prices: 3.0m);
         // P1.Prices = 500.0m;
-        
-        // VendingMachine THN = new VendingMachine();
-        // THN.AddCoin(2.00m);
+
+        VendingMachine THN = new VendingMachine();
+        THN.Refill(P1);
+        THN.Refill(P2);
+        THN.PrintAvailableProducts();
+        // THN.AddCoin(2.0m);
+        // THN.Select("Cola");
+        // THN.Select("Bier");
+        // THN.Select("Cola");
         // THN.SelectItem(Product.Bier);
         // THN.SelectItem(Product.Bier);
 
